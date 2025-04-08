@@ -195,3 +195,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+# Script para recuperar y enriquecer metadatos genómicos desde NCBI.
+# Autor: Cristóbal [Tu Apellido] (2025)
+# Licencia: GPL v3.0 - https://www.gnu.org/licenses/gpl-3.0.html
+
