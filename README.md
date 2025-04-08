@@ -1,4 +1,5 @@
 🔬 Genomes Metadata Fetcher for NCBI Assemblies
+
 Este script en Python automatiza la recuperación y enriquecimiento de metadatos genómicos para un género bacteriano desde la base de datos NCBI (Assembly). Integra herramientas de línea de comandos de NCBI (esearch, efetch, datasets) para generar un archivo .csv limpio y estructurado, ideal para estudios de genómica comparativa, vigilancia ambiental o bioinformática evolutiva.
 
 ⚙️ Características
