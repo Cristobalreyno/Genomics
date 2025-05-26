@@ -1,83 +1,96 @@
-🔬 Genomes Metadata Fetcher for NCBI Assemblies
+# 🔬 Genomes Metadata Fetcher (Version 2.0)
 
-Este script en Python automatiza la recuperación y enriquecimiento de metadatos genómicos para un género bacteriano desde la base de datos NCBI (Assembly). Integra herramientas de línea de comandos de NCBI (esearch, efetch, datasets) para generar un archivo .csv limpio y estructurado, ideal para estudios de genómica comparativa, vigilancia ambiental o bioinformática evolutiva.
+This Python script automates the retrieval and enrichment of genomic metadata for a bacterial genus from NCBI databases (Assembly and Datasets CLI). It features robust logging, batch retrieval, extended parsing, and parallel processing using `ThreadPoolExecutor`.
 
-⚙️ Características
-Consulta todos los ensamblajes genómicos disponibles para un género específico.
+## ⚙️ Key Features
 
-Parsea metadatos detallados (ensamblaje, taxonomía, técnicas de secuenciación, GC%, número de genes, etc.).
+- Queries all available genome assemblies for a specified genus from NCBI Assembly.
+- Retrieves extended metadata for each accession using the NCBI Datasets CLI (`fetch_datasets_metadata`).
+- Performs detailed XML parsing, including taxonomy, assembly type, sequencing methods, gene counts, GC content, ANI, CheckM, environmental source, and more.
+- Automatically exports results to `.csv` and optionally to `.xlsx` (if `openpyxl` is available).
+- Supports parallel processing with configurable thread count (`--max-workers`).
+- Automatically checks system dependencies (`esearch`, `efetch`, `datasets`) at runtime.
+- Logs errors and missing data in `error_log.txt` and `missing_metadata.log`.
+- Prevents file overwriting by generating unique filenames for outputs.
 
-Enriquecimiento mediante datasets summary genome.
+## 🧪 Requirements
 
-Procesamiento paralelo para mayor velocidad.
+### Python
 
-Exportación automatizada a CSV.
-
-Registro de errores en un archivo error_log.txt.
-
-🧪 Requisitos
-Dependencias de Python
-
-Instalar con:
+Install with pip:
+```bash
 pip install -r requirements.txt
-Herramientas adicionales (no incluidas en pip)
-Este script requiere herramientas de línea de comandos proporcionadas por el NCBI, las cuales deben estar instaladas en el sistema y disponibles en el entorno ($PATH), ya que se invocan mediante subprocess.
+```
 
-Herramientas requeridas:
+### External Dependencies
 
-esearch y efetch (parte del paquete Entrez Direct)
-datasets (parte del paquete NCBI Datasets CLI)
+The script requires the following command-line tools to be installed and available in your system path:
 
-El script verifica automáticamente la presencia de estas herramientas al inicio. Si alguna falta, se mostrará un mensaje como:
+- `esearch` and `efetch` (part of Entrez Direct)
+- `datasets` (part of the NCBI Datasets CLI)
 
-La herramienta 'esearch' no está instalada o no está en el PATH.
-Instalación de herramientas requeridas
-Entrez Direct (esearch, efetch)
-Instalación manual en Linux/macOS:
-
+#### Installing Entrez Direct
+# Descargar edirect.tar.gz desde navegador o con curl
+```bash
 cd ~
-ftp https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/edirect.tar.gz
+https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/edirect.tar.gz
+or 
+curl -O https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/edirect.tar.gz
+# Descomprimir
 tar -xvzf edirect.tar.gz
+
+# Agregar edirect al PATH (temporalmente)
 export PATH=${HOME}/edirect:$PATH
-Guía oficial
 
-NCBI Datasets CLI (datasets)
-Instalación recomendada con Conda:
+```
 
+#### Installing the Datasets CLI
+
+Using Conda:
+```bash
 conda install -c conda-forge ncbi-datasets-cli
-O desde el sitio oficial:
-https://www.ncbi.nlm.nih.gov/datasets/docs/command-line-start/
+```
 
-▶️ Uso
-Ejecutar desde la terminal:
+Official documentation: [NCBI Datasets CLI](https://www.ncbi.nlm.nih.gov/datasets/docs/command-line-start/)
 
-python get_ncbi_genomes_metadata.py <nombre_del_género>
-Ejemplo:
+## ▶️ Usage
 
-python get_ncbi_genomes_metadata.py Pantoea
-Esto generará un archivo pantoea_genomes_metadata.csv con todos los genomas disponibles del género, incluyendo información detallada y enriquecida.
+```bash
+python Get_NCBI_genomes_metadata_V2.py <genus_name> [--max-workers N]
+```
 
-📁 Archivos generados
-género_genomes_metadata.csv: archivo con metadatos completos.
+Example:
+```bash
+python Get_NCBI_genomes_metadata_V2.py Pantoea --max-workers 12
+```
 
-error_log.txt: registro de errores durante la ejecución.
+This will generate a `genomes_metadata.csv` file (and optionally `.xlsx`) containing enriched metadata for all available assemblies of the specified genus.
 
-🧬 Estructura general del script
-check_dependencies(): verifica que las herramientas de NCBI estén instaladas.
+## 📁 Output Files
 
-fetch_ncbi_data(): obtiene los ensamblajes del género.
+- `genomes_metadata.csv`: main file containing the combined metadata.
+- `genomes_metadata.xlsx`: Excel version (if `openpyxl` is installed).
+- `error_log.txt`: internal errors logged during execution.
+- `missing_metadata.log`: accessions for which extended metadata could not be retrieved.
 
-parse_genomes(): transforma el XML en un DataFrame.
+## 👨‍🔬 Author
 
-fetch_datasets_metadata(): recupera metadatos adicionales por accession.
-
-main(): coordina la ejecución, paraleliza las tareas y exporta los resultados.
-
-👨‍🔬 Autor
-Cristóbal Reyno
-PhD (c) en Biología Celular y Molecular Aplicada – Universidad de La Frontera
-Investigador en resistencia antimicrobiana en ambientes acuáticos
+**Cristóbal Reyno**  
+PhD(c) in Applied Cellular and Molecular Biology – Universidad de La Frontera  
+Researcher in antimicrobial resistance in aquatic environments  
 📍 Temuco, Chile
 
-Este script fue desarrollado como parte de una investigación académica orientada al estudio de bacterias ambientales resistentes a múltiples antibióticos.
-Puede ser reutilizado libremente con fines científicos o educativos.
+> This script may be freely reused for scientific or educational purposes.
+
+
+## 👨‍🔬 Author
+
+**Cristóbal Reyno**  
+PhD(c) in Applied Cellular and Molecular Biology – Universidad de La Frontera  
+Researcher in antimicrobial resistance in aquatic environments  
+📍 Temuco, Chile
+
+> This script was developed as part of the author's doctoral thesis entitled  
+> *“Genomic characterization and virulence against Dictyostelium discoideum of multiple antibiotic-resistance (MAR) Pantoea strains isolated from the Villarrica Lake sediments (southern Chile).”*
+  
+> The script is freely available for scientific and educational use.
