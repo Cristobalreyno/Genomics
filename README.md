@@ -1,6 +1,6 @@
-# 🔬 Genomes Metadata Fetcher (Version 2.0)
+# 🧬 Genomes Metadata Fetcher (Version 2.0)
 
-This Python script automates the retrieval and enrichment of genomic metadata for a bacterial genus from NCBI databases (Assembly and Datasets CLI). It features robust logging, batch retrieval, extended parsing, and parallel processing using `ThreadPoolExecutor`.
+This Python script automates the retrieval and enrichment of genomic metadata for a bacterial genus from NCBI databases (Assembly and Datasets CLI).
 
 ## ⚙️ Key Features
 
@@ -15,73 +15,50 @@ This Python script automates the retrieval and enrichment of genomic metadata fo
 
 ## 🧪 Requirements
 
-### Python
+Python ≥ 3.8 (installed automatically with Conda), Conda (Anaconda or Miniconda), internet access, and the external tools Entrez Direct (`esearch`, `efetch`) and NCBI Datasets CLI (`datasets`).
 
-Install with pip:
+Quick Installation and Usage:  
+Place both the `Get_NCBI_genomes_metadata_V2.py` script and the `environment.yml` file in the same folder. Conda will install all the necessary libraries and tools, but you still need to run the main script to perform the metadata retrieval. Open a terminal in that folder and run:
+
 ```bash
-pip install -r requirements.txt
-```
-
-### External Dependencies
-
-The script requires the following command-line tools to be installed and available in your system path:
-
-- `esearch` and `efetch` (part of Entrez Direct)
-- `datasets` (part of the NCBI Datasets CLI)
-
-#### Installing Entrez Direct
-# Descargar edirect.tar.gz desde navegador o con curl
-```bash
+conda env create -f environment.yml
+conda activate get_ncbi_genomes_metadata
 cd ~
-https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/edirect.tar.gz
-or 
-curl -O https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/edirect.tar.gz
-# Descomprimir
+wget https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/edirect.tar.gz
 tar -xvzf edirect.tar.gz
-
-# Agregar edirect al PATH (temporalmente)
-export PATH=${HOME}/edirect:$PATH
-
+echo 'export PATH="${HOME}/edirect:$PATH"' >> ~/.bashrc
+source ~/.bashrc
 ```
 
-#### Installing the Datasets CLI
+If you use zsh, replace `.bashrc` with `.zshrc` in the last command.  
+Verify that the following commands work (each should display a help message, not an error):
 
-Using Conda:
 ```bash
-conda install -c conda-forge ncbi-datasets-cli
+esearch -h
+efetch -h
+datasets --help
 ```
+With the environment activated and all dependencies installed, you can now run:
 
-Official documentation: [NCBI Datasets CLI](https://www.ncbi.nlm.nih.gov/datasets/docs/command-line-start/)
-
-## ▶️ Usage
+## ▶ Usage
 
 ```bash
-python Get_NCBI_genomes_metadata_V2.py <genus_name> [--max-workers N]
+python Get_NCBI_genomes_metadata_V2.py <genus_name> --max-workers 8
 ```
 
 Example:
-```bash
-python Get_NCBI_genomes_metadata_V2.py Pantoea --max-workers 12
-```
 
-This will generate a `genomes_metadata.csv` file (and optionally `.xlsx`) containing enriched metadata for all available assemblies of the specified genus.
+```bash
+python Get_NCBI_genomes_metadata_V2.py Pantoea --max-workers 8
+```
+Replace `<genus_name>` with the genus you want to analyze. The script will produce output files in the same folder.
 
 ## 📁 Output Files
+- `genomes_metadata.csv`: main file with the combined metadata  
+- `genomes_metadata.xlsx`: Excel version (if `openpyxl` is available)  
+- `error_log.txt` and `missing_metadata.log`: log files with errors or accessions missing metadata
 
-- `genomes_metadata.csv`: main file containing the combined metadata.
-- `genomes_metadata.xlsx`: Excel version (if `openpyxl` is installed).
-- `error_log.txt`: internal errors logged during execution.
-- `missing_metadata.log`: accessions for which extended metadata could not be retrieved.
-
-## 👨‍🔬 Author
-
-**Cristóbal Reyno**  
-PhD(c) in Applied Cellular and Molecular Biology – Universidad de La Frontera  
-Researcher in antimicrobial resistance in aquatic environments  
-📍 Temuco, Chile
-
-> This script may be freely reused for scientific or educational purposes.
-
+Notes: Conda is only used to install the libraries and tools required by the script. You still need to run the provided Python script to actually perform the metadata retrieval. You do not need to use GitHub unless you want to share or update the files.
 
 ## 👨‍🔬 Author
 
@@ -91,6 +68,5 @@ Researcher in antimicrobial resistance in aquatic environments
 📍 Temuco, Chile
 
 > This script was developed as part of the author's doctoral thesis entitled  
-> *“Genomic characterization and virulence against Dictyostelium discoideum of multiple antibiotic-resistance (MAR) Pantoea strains isolated from the Villarrica Lake sediments (southern Chile).”*
-  
-> The script is freely available for scientific and educational use.
+> “Genomic characterization and virulence against Dictyostelium discoideum of multiple antibiotic-resistance (MAR) Pantoea strains isolated from the Villarrica Lake sediments (southern Chile).”*  
+> It is freely available for scientific and educational use.
