@@ -1,0 +1,9 @@
+name: get_ncbi_genomes_metadata
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.8
+  - pandas>=1.3.0
+  - xmltodict>=0.12.0
+  - openpyxl>=3.0.0
+  - ncbi-datasets-cli
