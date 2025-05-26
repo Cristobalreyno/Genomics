@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Genomes Metadata Fetcher Mejorado
-Autor: Cristobal Reyno
-Versión: 1.5
-Descripción: Descarga y enriquece metadatos genómicos desde NCBI Assembly + datasets, con recuperación extendida sin perder campos previos.
+Improved Genomes Metadata Fetcher
+Author: Cristobal Reyno
+Version: 2.0
+Description: Downloads and enriches genomic metadata from NCBI Assembly and Datasets, with extended retrieval while preserving previously obtained fields.
 """
 
 import subprocess
