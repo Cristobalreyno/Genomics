@@ -67,6 +67,7 @@ PhD(c) in Applied Cellular and Molecular Biology – Universidad de La Frontera
 Researcher in antimicrobial resistance in aquatic environments  
 📍 Temuco, Chile
 
-> This script was developed as part of the author's doctoral thesis entitled  
-> “Genomic characterization and virulence against Dictyostelium discoideum of multiple antibiotic-resistance (MAR) Pantoea strains isolated from the Villarrica Lake sediments (southern Chile).”*  
-> It is freely available for scientific and educational use.
+This script was developed as part of the author's doctoral thesis entitled  
+“Genomic characterization and virulence against Dictyostelium discoideum of multiple antibiotic-resistance (MAR) Pantoea strains isolated from the Villarrica Lake sediments (southern Chile).”*  
+
+It is freely available for scientific and educational use.
